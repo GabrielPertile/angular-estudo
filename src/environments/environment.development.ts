@@ -3,5 +3,5 @@ export const environment = {
   production: false,
 
   // Endpoint base da api do back-end
-  apiUrl : 'http://localhost:8000',
+  apiUrl : 'http://localhost:80',
 };

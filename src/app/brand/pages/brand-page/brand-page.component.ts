@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -44,9 +44,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
   ],
   providers: [BrandHttpRequestService]
 })
-export class BrandPageComponent {
+export class BrandPageComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   brands = ELEMENT_DATA;
 
   form: FormGroup;
@@ -60,21 +60,23 @@ export class BrandPageComponent {
     });
   }
 
+  ngOnInit(): void {
+      this.loadBrands();
+  }
+
   onFormSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.valid);
-    }
-    let response = this._brandHttpRequestService.index().subscribe(data => {
-      console.log('ta no data');
-      console.log(data);
+    console.log(this.form.value);
+    this.loadBrands(this.form.value);
 
-      return data;
-    }, error => {
-      console.log('ta no error');
-      console.log(error);
-      return error;
+  }
+
+  loadBrands(filter = {}) {
+    this._brandHttpRequestService.index(filter).subscribe({
+      next: (value) => {
+        this.brands = value.data;
+
+      },
+      error: (e) => console.warn(e)
     });
-    console.log(response);
-
   }
 }
