@@ -9,12 +9,18 @@ export class BrandHttpRequestService {
   constructor(private _http: HttpClient) { }
 
   public index(filter: any): Observable<any> {
-    return this._http.get(environment.apiUrl + this.uri, { params: {
-      filter: JSON.stringify(filter)
-    }});
+    return this._http.get(environment.apiUrl + this.uri, {
+      params: {
+        filter: JSON.stringify(filter)
+      }
+    });
   }
 
   public getById(id: number): Observable<any> {
     return this._http.get(environment.apiUrl + this.uri + "/" + id);
+  }
+
+  deleteById(id: number): Observable<any> {
+    return this._http.delete(environment.apiUrl + this.uri + "/" + id);
   }
 }

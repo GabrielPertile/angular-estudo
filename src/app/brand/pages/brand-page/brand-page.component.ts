@@ -61,7 +61,7 @@ export class BrandPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.loadBrands();
+    this.loadBrands();
   }
 
   onFormSubmit() {
@@ -75,6 +75,22 @@ export class BrandPageComponent implements OnInit {
       next: (value) => {
         this.brands = value.data;
 
+      },
+      error: (e) => console.warn(e)
+    });
+  }
+
+  openModal(id: number) {
+    console.log(id);
+  }
+
+  deleteBrand(id: number) {
+    this._brandHttpRequestService.deleteById(id).subscribe({
+      next: (value) => {
+        console.log(value);
+        // TODO isso irá mudar para um dialog
+        alert(value.data.message);
+        this.onFormSubmit();
       },
       error: (e) => console.warn(e)
     });
